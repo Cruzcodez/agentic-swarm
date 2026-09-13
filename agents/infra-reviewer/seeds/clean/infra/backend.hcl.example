@@ -1,0 +1,3 @@
+bucket         = "your-tfstate-bucket"
+region         = "us-east-1"
+dynamodb_table = "your-tfstate-locks"

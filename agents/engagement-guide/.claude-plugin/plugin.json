@@ -1,0 +1,12 @@
+{
+  "name": "engagement-guide",
+  "description": "Interviews you one question at a time to fill out an engagement document. Writes 'unknown' instead of guessing. Produces the document; never invents its contents.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chris Cruz",
+    "url": "https://github.com/Cruzcodez"
+  },
+  "agents": [
+    "./dist/claude/engagement-guide.md"
+  ]
+}

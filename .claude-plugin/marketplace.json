@@ -1,0 +1,116 @@
+{
+  "name": "agentic-swarm",
+  "owner": {
+    "name": "Chris Cruz",
+    "url": "https://github.com/Cruzcodez"
+  },
+  "metadata": {
+    "description": "Specialized review agents. Each one reads a change from one angle, refuses to pass specific problems, and reports in a shared format. Install one or all."
+  },
+  "plugins": [
+    {
+      "name": "security-reviewer",
+      "source": "./agents/security-reviewer",
+      "description": "Blocks on credentials in source, injection, missing auth, over-broad IAM, static cloud keys in CI, and critical dependency vulnerabilities. Reports only, never edits.",
+      "agents": [
+        "./dist/claude/security-reviewer.md"
+      ],
+      "category": "review",
+      "keywords": [
+        "security",
+        "review",
+        "secrets",
+        "iam"
+      ]
+    },
+    {
+      "name": "docs-reviewer",
+      "source": "./agents/docs-reviewer",
+      "description": "Blocks on a README behind the code, undocumented env vars, constraining decisions with no ADR, cloud resources with no teardown, and vague not-production-ready claims. Reports only, never edits.",
+      "agents": [
+        "./dist/claude/docs-reviewer.md"
+      ],
+      "category": "review",
+      "keywords": [
+        "documentation",
+        "review",
+        "handoff",
+        "adr"
+      ]
+    },
+    {
+      "name": "infra-reviewer",
+      "source": "./agents/infra-reviewer",
+      "description": "Reviews infrastructure code, deploy scripts, CI workflows, and container definitions for whether they'll run, what they cost, and whether they can be torn down. Reports only, never edits.",
+      "agents": [
+        "./dist/claude/infra-reviewer.md"
+      ],
+      "category": "review",
+      "keywords": [
+        "infrastructure",
+        "terraform",
+        "ci",
+        "cost",
+        "teardown"
+      ]
+    },
+    {
+      "name": "test-reviewer",
+      "source": "./agents/test-reviewer",
+      "description": "Reviews a change for whether the new behavior is covered and whether the tests would fail if it broke. Reports only, never edits.",
+      "agents": [
+        "./dist/claude/test-reviewer.md"
+      ],
+      "category": "review",
+      "keywords": [
+        "tests",
+        "coverage",
+        "review"
+      ]
+    },
+    {
+      "name": "scope-reviewer",
+      "source": "./agents/scope-reviewer",
+      "description": "Reviews a change against engagement/03-scope.md and docs/decisions/ for whether it was supposed to be built and whether big choices were recorded. Reports only, never edits.",
+      "agents": [
+        "./dist/claude/scope-reviewer.md"
+      ],
+      "category": "review",
+      "keywords": [
+        "scope",
+        "adr",
+        "review"
+      ]
+    },
+    {
+      "name": "engagement-guide",
+      "source": "./agents/engagement-guide",
+      "description": "Interviews you one question at a time to fill out an engagement document. Writes 'unknown' instead of guessing. Produces the document; never invents its contents.",
+      "agents": [
+        "./dist/claude/engagement-guide.md"
+      ],
+      "category": "engagement",
+      "keywords": [
+        "intake",
+        "discovery",
+        "scope",
+        "handoff",
+        "interview"
+      ]
+    },
+    {
+      "name": "swarm",
+      "source": "./agents/swarm",
+      "description": "Runs every installed review agent on a change in parallel and merges their reports into one verdict. Any single BLOCK is a BLOCK. On Claude Code this is the /swarm command.",
+      "commands": [
+        "./dist/claude/swarm.md"
+      ],
+      "category": "review",
+      "keywords": [
+        "orchestrator",
+        "swarm",
+        "review"
+      ]
+    }
+  ]
+}

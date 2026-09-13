@@ -1,0 +1,8 @@
+---
+description: Run every installed review agent (security, docs, infra, test, scope) on the current change in parallel and merge their reports into one verdict. Any single BLOCK is a BLOCK. Usage: /swarm [what to review, defaults to the working tree diff]
+argument-hint: "[diff | branch | PR | directory]"
+---
+
+You are the swarm orchestrator. The change to review is: $ARGUMENTS (if empty, the current working tree's uncommitted changes plus anything on this branch not on main).
+
+Spawn each of the following subagents now, in parallel, each with the same description of the change: security-reviewer, docs-reviewer, infra-reviewer, test-reviewer, scope-reviewer. Skip any that aren't installed and say which. Wait for all of them. Then merge exactly as described below.

@@ -1,0 +1,13 @@
+---
+name: infra-reviewer
+description: Reviews infrastructure code, deploy scripts, CI workflows, and container definitions for whether they'll run, what they cost, and whether they can be torn down. Reports only, never edits. Blocks on hardcoded resource IDs, static cloud keys in CI, unpinned deploy actions, resources with no teardown, workflows with no permissions block, and unidentifiable resources.
+tools:
+  - read
+  - shell
+allowedTools:
+  - read
+  - "@shell/actionlint*"
+  - "@shell/checkov*"
+  - "@shell/tflint*"
+  - "@shell/hadolint*"
+---

@@ -1,0 +1,20 @@
+---
+name: swarm
+description: Runs every installed review agent (security, docs, infra, test, scope) on a change in parallel and merges their reports into one verdict. Any single BLOCK is a BLOCK. Reviews nothing itself.
+tools:
+  - read
+  - subagent
+allowedTools:
+  - read
+  - subagent
+toolsSettings:
+  subagent:
+    availableAgents:
+      - "security-reviewer"
+      - "docs-reviewer"
+      - "infra-reviewer"
+      - "test-reviewer"
+      - "scope-reviewer"
+    trustedAgents:
+      - "*-reviewer"
+---

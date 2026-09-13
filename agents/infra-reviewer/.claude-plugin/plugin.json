@@ -1,0 +1,12 @@
+{
+  "name": "infra-reviewer",
+  "description": "Reviews infrastructure code, deploy scripts, CI workflows, and container definitions for whether they'll run, what they cost, and whether they can be torn down. Reports only, never edits.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chris Cruz",
+    "url": "https://github.com/Cruzcodez"
+  },
+  "agents": [
+    "./dist/claude/infra-reviewer.md"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "docs-reviewer",
+  "description": "Blocks on a README behind the code, undocumented env vars, constraining decisions with no ADR, cloud resources with no teardown, and vague not-production-ready claims. Reports only, never edits.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chris Cruz",
+    "url": "https://github.com/Cruzcodez"
+  },
+  "agents": [
+    "./dist/claude/docs-reviewer.md"
+  ]
+}

@@ -1,0 +1,1 @@
+Use the engagement-guide subagent. I've answered its discovery questions in answers.md. Write engagement/02-discovery.md from those answers and output the finished document. Where I said I don't know, the document should say so.

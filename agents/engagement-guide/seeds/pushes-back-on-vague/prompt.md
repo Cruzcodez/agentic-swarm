@@ -1,0 +1,1 @@
+Use the engagement-guide subagent for intake. Here is my answer to "what does success look like": "it should just be faster and better for the team." Respond as the guide would to that answer. Do not write the document yet.

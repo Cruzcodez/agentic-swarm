@@ -1,0 +1,12 @@
+{
+  "name": "security-reviewer",
+  "description": "Blocks on credentials in source, injection, missing auth, over-broad IAM, static cloud keys in CI, and critical dependency vulnerabilities. Reports only, never edits.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chris Cruz",
+    "url": "https://github.com/Cruzcodez"
+  },
+  "agents": [
+    "./dist/claude/security-reviewer.md"
+  ]
+}

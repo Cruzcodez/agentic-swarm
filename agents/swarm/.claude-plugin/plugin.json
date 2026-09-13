@@ -1,0 +1,12 @@
+{
+  "name": "swarm",
+  "description": "Runs every installed review agent on a change in parallel and merges their reports into one verdict. Any single BLOCK is a BLOCK. On Claude Code this is the /swarm command.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chris Cruz",
+    "url": "https://github.com/Cruzcodez"
+  },
+  "commands": [
+    "./dist/claude/swarm.md"
+  ]
+}

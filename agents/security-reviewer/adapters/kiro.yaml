@@ -1,0 +1,14 @@
+---
+name: security-reviewer
+description: Reviews a code change for ways it can be attacked or leak secrets. Reports only, never edits. Blocks on credentials in source, injection, missing auth, over-broad IAM, static cloud keys in CI, and critical dependency vulnerabilities.
+tools:
+  - read
+  - shell
+allowedTools:
+  - read
+  - "@shell/git *"
+  - "@shell/gitleaks *"
+  - "@shell/semgrep *"
+  - "@shell/npm audit*"
+  - "@shell/pip-audit*"
+---

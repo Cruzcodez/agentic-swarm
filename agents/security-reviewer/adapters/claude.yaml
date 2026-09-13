@@ -1,0 +1,6 @@
+---
+name: security-reviewer
+description: Reviews a code change for ways it can be attacked or leak secrets. Use after code is written and before merge. Reports only, never edits. Blocks on credentials in source, injection, missing auth, over-broad IAM, static cloud keys in CI, and critical dependency vulnerabilities.
+tools: Read, Grep, Glob, Bash
+model: sonnet
+---

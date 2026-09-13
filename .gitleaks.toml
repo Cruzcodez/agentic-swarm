@@ -1,0 +1,10 @@
+# Seeds are test cases that deliberately contain credential-shaped strings so
+# the security reviewer has something to catch. Scanning them would flag the
+# tests. Everything else in the repo is scanned normally.
+[extend]
+useDefault = true
+
+[allowlist]
+paths = [
+  '''agents/.*/seeds/.*''',
+]
