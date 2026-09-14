@@ -150,7 +150,9 @@ This repo was generated from [project-starter](https://github.com/Cruzcodez/proj
 
 ## Status
 
-Working, and in use. Seven agents, 35 seeds passing, and two real pull requests reviewed on [expiry-tracker](https://github.com/Cruzcodez/expiry-tracker), a project built with this swarm reviewing every change before it opens. Both reviews came back BLOCK. Across them: 8 blocking findings, 8 should-fix, 17 of 18 accepted and fixed in the same pull request, none overridden, and by the author's own count 11 of 18 would have been missed without the review. The per-finding scorecards are in that project's [docs/review-log.md](https://github.com/Cruzcodez/expiry-tracker/blob/main/docs/review-log.md).
+Working, and in use. Seven agents, 35 seeds passing, and four real pull requests reviewed on [shelflife](https://github.com/Cruzcodez/shelflife), a project built with this swarm reviewing every change before it opens. Every review came back BLOCK at least once. Across four swarm passes: 12 blocking findings, 16 should-fix, 27 accepted and fixed in the same pull request, none overridden, and by the author's own count 18 of 30 would have been missed without the review. The per-finding scorecards are in that project's [docs/review-log.md](https://github.com/Cruzcodez/shelflife/blob/main/docs/review-log.md).
+
+Two findings worth naming. A reviewer stood up a local server and proved the tool would follow an HTTP redirect to `127.0.0.1`, a request-forgery hole in code written an hour earlier. And on a second pass, the agents were handed a review log claiming everything had been fixed, treated that as a claim to verify rather than a fact, and found what it missed.
 
 Real use has fixed the swarm twice so far, both logged in [docs/eval-log.md](docs/eval-log.md): the agents were never told who else was on the team, so one invented a teammate to hand a finding to; and the built agent files were gitignored, so the plugin install could not have worked for anyone but the author.
 
