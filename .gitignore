@@ -31,6 +31,9 @@ venv/
 
 # ---- Build output ----
 dist/
+# The agents' dist/ is generated but committed on purpose: the plugin marketplace
+# and Kiro installs read it straight from the repo. scripts/build.sh --check keeps it honest.
+!agents/*/dist/
 build/
 out/
 .next/
