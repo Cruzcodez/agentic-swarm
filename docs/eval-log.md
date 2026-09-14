@@ -42,7 +42,7 @@ Of the fourteen fixes, three were in the runner, four were in charters, and seve
 
 **Result: one swarm defect found by real use, fixed, 35 of 35 seeds after adding one.**
 
-The swarm reviewed its first real pull request (expiry-tracker PR 1, logged in that repo's `docs/review-log.md`). It returned BLOCK with three blocking findings and four should-fix, all of which held up. The defect was in how it handled the one finding nobody owned.
+The swarm reviewed its first real pull request (shelflife (then called expiry-tracker) PR 1, logged in that repo's `docs/review-log.md`). It returned BLOCK with three blocking findings and four should-fix, all of which held up. The defect was in how it handled the one finding nobody owned.
 
 ### The swarm invented a teammate
 
