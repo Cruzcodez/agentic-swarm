@@ -4,7 +4,7 @@ Specialized AI review agents. Each one reads a code change from one angle, refus
 
 **Agentic Swarm Development** is the idea behind it: many narrow reviewers examine the same change at once, each with a defined lane and a list of what it won't let through, and their findings merge into a single verdict. Agents criticize. People build.
 
-Two agents exist so far. More are planned, and the order is in [docs/design.md](docs/design.md).
+All seven agents exist and have been used on real pull requests. The order they were built in, and why, is in [docs/design.md](docs/design.md).
 
 ## Install one agent
 
@@ -31,12 +31,37 @@ That copies the agent into `~/.kiro/agents/` so it's available in every project.
 
 ## The agents
 
+Five critics, one interviewer, and one coordinator. Each critic has a narrow lane and a list of things it stays out of, because six agents commenting on the same naming issue bury the one real finding.
+
 | Agent | It blocks on | It stays out of |
 | --- | --- | --- |
 | [security-reviewer](agents/security-reviewer/) | Credentials in source. Untrusted input reaching a query, shell, or path. Mutating endpoints with no auth check. IAM wildcards. Static cloud keys in CI. Critical dependency vulnerabilities. | Tests, docs, cost, style |
 | [docs-reviewer](agents/docs-reviewer/) | README behind the code. Undocumented environment variables. Constraining decisions with no ADR. Cloud resources with no teardown. "Not production ready" with no specifics. | Whether the code works, is secure, or is tested |
+| [infra-reviewer](agents/infra-reviewer/) | Hardcoded resource identifiers. Static cloud keys in CI. Mutable action versions on deploy steps. Infrastructure with no teardown. No `permissions:` block on a job that can reach something. Resources nobody could identify later. | Application logic, whether infrastructure is attackable, tests |
+| [test-reviewer](agents/test-reviewer/) | New behavior with no test. A test that can't fail. A test removed or skipped to go green. Coverage dropped on the changed lines. | Whether the code is correct, secure, or documented |
+| [scope-reviewer](agents/scope-reviewer/) | Work that wasn't agreed. Work that was explicitly excluded. A constraining decision with no ADR. A new dependency with no reason written down. | How the code is written, and whether the scope was a good idea |
+| [engagement-guide](agents/engagement-guide/) | Not a critic. Interviews you to fill out the intake, discovery, scope, or handoff document, and never fills in a blank you didn't answer. | Writing anything you didn't say |
+| [swarm](agents/swarm/) | Not a critic. Runs the five reviewers in parallel and merges their reports into one. Any single BLOCK is a BLOCK. | Reviewing anything itself |
 
-Each agent's folder has a README with the full list and the reasoning behind it.
+Each agent's folder has a README with the full list and the reasoning behind it, and a `charter.md` that is the agent.
+
+## Run the whole swarm
+
+Inside a project on Claude Code, after installing the agents:
+
+```
+/swarm
+/swarm main..HEAD
+```
+
+From a terminal, against any repository, with nothing installed in it:
+
+```bash
+scripts/review.sh /path/to/repo              # this branch vs main, plus uncommitted changes
+scripts/review.sh /path/to/repo main..HEAD   # any git range
+```
+
+`review.sh` copies the repository to a scratch directory, installs the built agents there, runs `/swarm` through the Claude Code CLI, and prints the merged report. Exit code is 0 for PASS, 1 for WARN, 2 for BLOCK. The repository you point it at is never touched. A five-agent review of a medium pull request takes four to six minutes.
 
 ## What a review looks like
 
@@ -115,7 +140,7 @@ When an agent misses something on a real repository, that becomes a new seed.
 | Path | What |
 | --- | --- |
 | `shared/` | The output format and the review rules every agent follows |
-| `scripts/` | build, install, run-seeds, and the health check CI runs |
+| `scripts/` | build, install, run-seeds, review (run the swarm on any repo), and the health check CI runs |
 | `engagement/` | Why this exists: the intake, discovery, and scope that led to it |
 | `docs/design.md` | The shape of the repo and the reasoning |
 | `docs/decisions/` | Individual decisions, recorded as ADRs |
@@ -125,7 +150,11 @@ This repo was generated from [project-starter](https://github.com/Cruzcodez/proj
 
 ## Status
 
-Proof of concept. Two agents, tested on seeds and on one real repository. No CI integration yet; reviews run when a person runs them. Token cost per review hasn't been measured. Blind spots haven't been found because nobody's looked hard enough yet.
+Working, and in use. Seven agents, 35 seeds passing, and two real pull requests reviewed on [expiry-tracker](https://github.com/Cruzcodez/expiry-tracker), a project built with this swarm reviewing every change before it opens. Both reviews came back BLOCK. Across them: 8 blocking findings, 8 should-fix, 17 of 18 accepted and fixed in the same pull request, none overridden, and by the author's own count 11 of 18 would have been missed without the review. The per-finding scorecards are in that project's [docs/review-log.md](https://github.com/Cruzcodez/expiry-tracker/blob/main/docs/review-log.md).
+
+Real use has fixed the swarm twice so far, both logged in [docs/eval-log.md](docs/eval-log.md): the agents were never told who else was on the team, so one invented a teammate to hand a finding to; and the built agent files were gitignored, so the plugin install could not have worked for anyone but the author.
+
+Not done: no CI integration, reviews run when a person runs them. Token cost per review has not been measured. The seeds test each agent alone; the interactions between agents have only been exercised on real pull requests.
 
 ## License
 

@@ -48,7 +48,7 @@ When an agent misses something on a real repository, that becomes a new seed. Th
 | scope-reviewer | Does the change match what was agreed, was the reasoning recorded | 3 |
 | engagement-guide | Interviews you to fill out intake, discovery, scope, handoff | 3 |
 
-Wave 1 has a gate: install both agents into a real project and run them on a real change. If two agents can't produce a useful review, adding five more doesn't help.
+Wave 1 had a gate: install both agents into a real project and run them on a real change. If two agents can't produce a useful review, adding five more doesn't help. All three waves are built as of 2026-09-14; the gate was passed on this repository's own engagement documents, and the full swarm has since reviewed real pull requests on expiry-tracker.
 
 The swarm orchestrator is wave 2 on purpose. There's nothing to orchestrate until at least two critics exist and have caught something.
 
