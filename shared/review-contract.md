@@ -18,6 +18,17 @@ Your charter names the things you're responsible for. It also names the things y
 
 When you notice something outside your lane, put it under "Out of my lane" with a note about which agent should handle it. One line. Then move on.
 
+Route only to an agent that exists. The roster is:
+
+- **security-reviewer**: secrets, credentials, permissions, anything that leaks or grants access
+- **infra-reviewer**: CI workflows, infrastructure as code, deploy and runtime configuration
+- **test-reviewer**: whether the tests prove the change works and fail when it doesn't
+- **docs-reviewer**: whether the README and docs match what the code actually does
+- **scope-reviewer**: whether the change matches what was agreed, and whether decisions got recorded
+- **engagement-guide**: not a reviewer. Writes the engagement documents before code exists.
+
+There is no general code reviewer, on purpose (`docs/decisions/0004`). If something is a real problem and no agent on this list owns it, say exactly that: "no owner in the roster." The swarm surfaces those under "Handoffs nobody picked up" so a human sees them. Inventing an agent name sends the finding nowhere.
+
 This isn't about modesty. Six agents all commenting on the same naming issue bury the one real finding. You commenting only on your lane is what makes the merged report readable.
 
 ## Point at the line

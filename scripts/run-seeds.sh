@@ -107,6 +107,12 @@ for agent_dir in agents/*/; do
       # headers like "### Blocking" would false-match "BLOCK"; only scan finding lines
       printf '%s' "$report" | awk '/^### Noted/{exit} !/^#/ {print}' | grep -qiF -- "$term" && { ok=0; why+=("must not mention: $term"); }
     done < <(yaml_list "$expected" must_not_mention)
+    # Every agent name in the report must be a real agent. An "Out of my lane" handoff
+    # to an agent that doesn't exist is a finding that silently goes nowhere.
+    while IFS= read -r name; do
+      [ -z "$name" ] && continue
+      [ -d "agents/$name" ] || { ok=0; why+=("routed to unknown agent: $name"); }
+    done < <(printf '%s' "$report" | grep -oE '\b[a-z]+-(reviewer|guide)\b' | sort -u)
 
     if [ $ok -eq 1 ]; then passed=$((passed+1)); results+=("PASS  $agent/$seed  ($got)")
       [ "${SEED_KEEP_ALL:-}" = "1" ] && { mkdir -p .seed-reports; printf '%s\n' "$report" > ".seed-reports/$agent--$seed.md"; }

@@ -37,3 +37,18 @@ What the seeds caught, in the order it happened. Kept because the misses are mor
 Of the fourteen fixes, three were in the runner, four were in charters, and seven were in the seeds themselves. The agents were right more often than the tests were. The seeds still earned their keep: every runner bug and every charter fix came from a seed failing, and none of them would have been found by reading.
 
 `must_mention` and `must_not_mention` should test substance, never phrasing. Three separate seeds failed because the agent said the right thing in different words.
+
+## 2026-09-14, first real PR
+
+**Result: one swarm defect found by real use, fixed, 35 of 35 seeds after adding one.**
+
+The swarm reviewed its first real pull request (expiry-tracker PR 1, logged in that repo's `docs/review-log.md`). It returned BLOCK with three blocking findings and four should-fix, all of which held up. The defect was in how it handled the one finding nobody owned.
+
+### The swarm invented a teammate
+
+- **scope-reviewer** noticed a dead code branch, correctly decided it wasn't a scope problem, and handed it off under Out of my lane to "code-reviewer". There is no code-reviewer; ADR 0004 says there never will be. The swarm's merge step caught the bad route and listed the finding under "Handoffs nobody picked up" instead of dropping it, which is the right failure mode. But the agent had no way to know the name was wrong, because nothing it was given lists who exists.
+- Fix, in three parts. `shared/review-contract.md` now carries the roster with a one-line lane for each agent, says plainly that there is no general code reviewer, and gives the agent the words to use when nothing fits: "no owner in the roster." The runner now fails any report that names an agent not present under `agents/`, for every seed, so this can't come back quietly. And **scope-reviewer/handoff-has-no-owner** reproduces the situation: an in-scope change with an unused function in it. First run came back WARN for a real reason (the scope named an `expected-summary.csv` that the seed didn't include, the same mistake as `docs/clean` last time). With the fixtures added it passes, and the dead code lands under Noted with no invented name.
+
+### Pattern worth remembering
+
+A charter tells an agent what to look for. It also has to tell the agent what the rest of the team looks like, or the agent fills in the gap with the most common name it has seen. The seeds could never have found this because every seed exercises one agent alone. It took a real PR with a finding that fell between the lanes.
